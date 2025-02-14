@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Probabilidades</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Probabilidades</h1>
+
+        <div class="inputs">
+            <label>Dados jogados no ataque:
+                <input type="number" id="dicePlayedAtk" value="2">
+            </label>
+            <label>Dados usados no ataque:
+                <input type="number" id="diceSumAtk" value="2">
+            </label>
+            <label>Dados jogados no dano:
+                <input type="number" id="dicePlayedInjury" value="2">
+            </label>
+            <label>Dados usados no dano:
+                <input type="number" id="diceSumInjury" value="2">
+            </label>
+            <label>6 garantido injury chart
+                <input type="checkbox" id="guaranteedSix">
+            </label>
+        </div>
+
+        <h2>Resultados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th colspan="3">Atk</th>
+                    <th colspan="4">Injury</th>
+                    <th colspan="1" rowspan="2">Hit Kill</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Fail</th>
+                    <th>Success</th>
+                    <th>Crit</th>
+                    <th>No Eff</th>
+                    <th>Minor</th>
+                    <th>Down</th>
+                    <th>Kill</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Short range</td>
+                    <td id="short-atk-fail"></td>
+                    <td id="short-atk-success"></td>
+                    <td id="short-atk-critical"></td>
+                    <td id="short-injury-no-effect"></td>
+                    <td id="short-injury-minor-hit"></td>
+                    <td id="short-injury-down"></td>
+                    <td id="short-injury-kill"></td>
+                    <td id="short-hit-kill"></td>
+                </tr>
+                <tr>
+                    <td>Long range</td>
+                    <td id="long-atk-fail"></td>
+                    <td id="long-atk-success"></td>
+                    <td id="long-atk-critical"></td>
+                    <td id="long-injury-no-effect"></td>
+                    <td id="long-injury-minor-hit"></td>
+                    <td id="long-injury-down"></td>
+                    <td id="long-injury-kill"></td>
+                    <td id="long-hit-kill"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./lib/probability-calculator.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
