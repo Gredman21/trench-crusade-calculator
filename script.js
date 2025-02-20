@@ -12,7 +12,7 @@ function updateTables() {
 function updateShortTable() {
     let inputs = getInputValues()
 
-    let shortProbabilities = getRollsPropability(inputs.diceRolllAtk, inputs.diceSumAtk, inputs.diceRollInjury, inputs.diceSumInjury, inputs.critDiceRoll, inputs.fixedModifierAtk, inputs.fixedModifierInjury, inputs.pickHighestAtk, inputs.pickHighestInjury, inputs.critPickHighest, inputs.guaranteedSix, 6, 2)
+    let shortProbabilities = getRollsPropability(inputs.diceRolllAtk, inputs.diceSumAtk, inputs.diceRollInjury, inputs.diceSumInjury, inputs.critDiceRoll, inputs.flatModifierAtk, inputs.flatModifierInjury, inputs.pickHighestAtk, inputs.pickHighestInjury, inputs.critPickHighest, inputs.guaranteedSix, 6, 2)
     document.getElementById("short-atk-fail").innerText = shortProbabilities.atk.failure
     document.getElementById("short-atk-success").innerText = shortProbabilities.atk.success
     document.getElementById("short-atk-critical").innerText = shortProbabilities.atk.criticalSuccess
@@ -32,7 +32,7 @@ function updateShortTable() {
 function updateLongTable() {
     let inputs = getInputValues()
 
-    let longProbabilities = getRollsPropability(inputs.longDiceRollAtk, inputs.diceSumAtk, inputs.longDiceRollInjury, inputs.diceSumInjury, inputs.critDiceRoll, inputs.fixedModifierAtk, inputs.fixedModifierInjury, inputs.longPickHighestAtk, inputs.longPickHighestInjury, inputs.critPickHighest, inputs.guaranteedSix, 6, 2)
+    let longProbabilities = getRollsPropability(inputs.longDiceRollAtk, inputs.diceSumAtk, inputs.longDiceRollInjury, inputs.diceSumInjury, inputs.critDiceRoll, inputs.flatModifierAtk, inputs.flatModifierInjury, inputs.longPickHighestAtk, inputs.longPickHighestInjury, inputs.critPickHighest, inputs.guaranteedSix, 6, 2)
     document.getElementById("long-atk-fail").innerText = longProbabilities.atk.failure
     document.getElementById("long-atk-success").innerText = longProbabilities.atk.success
     document.getElementById("long-atk-critical").innerText = longProbabilities.atk.criticalSuccess
@@ -56,8 +56,8 @@ function getInputValues() {
     let diceAddSumInjury = Number(document.getElementById("diceAddSumInjury").value)
     let longRangePenaltyAtk = Number(document.getElementById("longRangePenaltyAtk").value)
     let longRangePenaltyInjury = Number(document.getElementById("longRangePenaltyInjury").value)
-    let fixedModifierAtk = Number(document.getElementById("fixedModifierAtk").value)
-    let fixedModifierInjury = Number(document.getElementById("fixedModifierInjury").value)
+    let flatModifierAtk = Number(document.getElementById("flatModifierAtk").value)
+    let flatModifierInjury = Number(document.getElementById("flatModifierInjury").value)
     let critAddDiceModifier = Number(document.getElementById("critAddDiceModifier").value)
 
     let guaranteedSix = document.getElementById("guaranteedSix").checked
@@ -146,8 +146,8 @@ function getInputValues() {
         longDiceRollInjury: longDiceRollInjury,
         critDiceRoll: critDiceRoll,
         longCritDiceRoll: longCritDiceRoll,
-        fixedModifierAtk: fixedModifierAtk,
-        fixedModifierInjury: fixedModifierInjury,
+        flatModifierAtk: flatModifierAtk,
+        flatModifierInjury: flatModifierInjury,
         guaranteedSix: guaranteedSix,
         pickHighestAtk: pickHighestAtk,
         longPickHighestAtk: longPickHighestAtk,
@@ -165,8 +165,8 @@ function loadRifle() {
     document.getElementById("diceAddSumInjury").value = 0
     document.getElementById("longRangePenaltyAtk").value = -1
     document.getElementById("longRangePenaltyInjury").value = 0
-    document.getElementById("fixedModifierAtk").value = 0
-    document.getElementById("fixedModifierInjury").value = 0
+    document.getElementById("flatModifierAtk").value = 0
+    document.getElementById("flatModifierInjury").value = 0
     document.getElementById("critAddDiceModifier").value = 1
     document.getElementById("guaranteedSix").checked = false
     document.getElementById("bloodbath").checked = false
@@ -181,8 +181,8 @@ function loadShotgun() {
     document.getElementById("diceAddSumInjury").value = 0
     document.getElementById("longRangePenaltyAtk").value = 0
     document.getElementById("longRangePenaltyInjury").value = -1
-    document.getElementById("fixedModifierAtk").value = 0
-    document.getElementById("fixedModifierInjury").value = 0
+    document.getElementById("flatModifierAtk").value = 0
+    document.getElementById("flatModifierInjury").value = 0
     document.getElementById("critAddDiceModifier").value = 1
     document.getElementById("guaranteedSix").checked = false
     document.getElementById("bloodbath").checked = false
@@ -197,8 +197,8 @@ function loadHeavyShotgun() {
     document.getElementById("diceAddSumInjury").value = 0
     document.getElementById("longRangePenaltyAtk").value = 0
     document.getElementById("longRangePenaltyInjury").value = -2
-    document.getElementById("fixedModifierAtk").value = 0
-    document.getElementById("fixedModifierInjury").value = 0
+    document.getElementById("flatModifierAtk").value = 0
+    document.getElementById("flatModifierInjury").value = 0
     document.getElementById("critAddDiceModifier").value = 1
     document.getElementById("guaranteedSix").checked = false
     document.getElementById("bloodbath").checked = false
@@ -213,8 +213,8 @@ function loadSacrificialKnife() {
     document.getElementById("diceAddSumInjury").value = 0
     document.getElementById("longRangePenaltyAtk").value = 0
     document.getElementById("longRangePenaltyInjury").value = 0
-    document.getElementById("fixedModifierAtk").value = 0
-    document.getElementById("fixedModifierInjury").value = 2
+    document.getElementById("flatModifierAtk").value = 0
+    document.getElementById("flatModifierInjury").value = 2
     document.getElementById("critAddDiceModifier").value = 1
     document.getElementById("guaranteedSix").checked = false
     document.getElementById("bloodbath").checked = false
@@ -229,8 +229,8 @@ function loadHellblade() {
     document.getElementById("diceAddSumInjury").value = 0
     document.getElementById("longRangePenaltyAtk").value = 0
     document.getElementById("longRangePenaltyInjury").value = 0
-    document.getElementById("fixedModifierAtk").value = 0
-    document.getElementById("fixedModifierInjury").value = 0
+    document.getElementById("flatModifierAtk").value = 0
+    document.getElementById("flatModifierInjury").value = 0
     document.getElementById("critAddDiceModifier").value = 1
     document.getElementById("guaranteedSix").checked = false
     document.getElementById("bloodbath").checked = false
