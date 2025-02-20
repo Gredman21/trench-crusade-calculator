@@ -1,4 +1,24 @@
+try {
+    localStorage.setItem("theme", "dark")
+    document.body.classList.add("dark")
+} catch(e) {
+    localStorage.getItem("theme")
+}
+
 updateTables()
+
+function toggleTheme() {
+    let theme = localStorage.getItem("theme")
+
+    if(theme === "dark") {
+        localStorage.setItem("theme", "light")
+    }
+    else {
+        localStorage.setItem("theme", "light")
+    }
+
+    document.body.classList.toggle("dark")
+}
 
 function updateTables() {
     document.getElementById("overlay").style.display = "flex"
