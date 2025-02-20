@@ -8,24 +8,67 @@
 </head>
 <body>
     <div class="container">
-        <h1>Calculadora de Probabilidades</h1>
+        <h1>Trench Crusade Atk/Dmg Calculator</h1>
 
         <div class="inputs">
-            <label>Dados jogados no ataque:
-                <input type="number" id="dicePlayedAtk" value="2">
-            </label>
-            <label>Dados usados no ataque:
-                <input type="number" id="diceSumAtk" value="2">
-            </label>
-            <label>Dados jogados no dano:
-                <input type="number" id="dicePlayedInjury" value="2">
-            </label>
-            <label>Dados usados no dano:
-                <input type="number" id="diceSumInjury" value="2">
-            </label>
-            <label>6 garantido injury chart
-                <input type="checkbox" id="guaranteedSix">
-            </label>
+            <div class="loadouts">
+                <div id="rifle" class="loadout-button" onclick="loadRifle()">
+                    Rifle
+                </div>
+                <div id="shotgun" class="loadout-button" onclick="loadShotgun()">
+                    Shotgun
+                </div>
+                <div id="heavy-shotgun" class="loadout-button" onclick="loadHeavyShotgun()">
+                    Heavy Shotgun
+                </div>
+                <div id="sacrificial-knife" class="loadout-button" onclick="loadSacrificialKnife()">
+                    Sacrificial Knife
+                </div>
+                <div id="hellblade" class="loadout-button" onclick="loadHellblade()">
+                    Hellblade
+                </div>
+            </div>
+            <div class="input-left">
+                <label>+/- DICE Attack Roll:
+                    <input type="number" id="diceModifierAtk" value="0">
+                </label>
+                <label>Add Dice to Sum Attack Roll:
+                    <input type="number" id="diceAddSumAtk" min="0" value="0">
+                </label>
+                <label>Long Range Penalty Attack Roll:
+                    <input type="number" id="longRangePenaltyAtk" max="0" value="-1">
+                </label>
+                <label>Fixed Modifier Attack Roll:
+                    <input type="number" id="fixedModifierAtk" value="0">
+                </label>
+            </div>
+            <div class="input-right">
+                <label>+/- DICE Injury Roll:
+                    <input type="number" id="diceModifierInjury" value="0">
+                </label>
+                <label>Add Dice to Sum Injury Roll:
+                    <input type="number" id="diceAddSumInjury" min="0" value="0">
+                </label>
+                <label>Long Range Penalty Injury Roll:
+                    <input type="number" id="longRangePenaltyInjury" max="0" value="0">
+                </label>
+                <label>Fixed Modifier Injury Roll:
+                    <input type="number" id="fixedModifierInjury" value="0">
+                </label>
+                <label>+/- DICE CRITICAL Effect:
+                    <input type="number" id="critAddDiceModifier" min="0" value="1">
+                </label>
+                <label>Set die to 6 Injury Roll
+                    <input type="checkbox" id="guaranteedSix">
+                </label>
+                <label>Bloodbath
+                    <input type="checkbox" id="bloodbath">
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <button type="button" onclick="updateTables()">Calculate</button>
         </div>
 
         <h2>Resultados</h2>
@@ -35,14 +78,13 @@
                     <th></th>
                     <th colspan="3">Atk</th>
                     <th colspan="4">Injury</th>
-                    <th colspan="1" rowspan="2">Hit Kill</th>
                 </tr>
                 <tr>
                     <th></th>
                     <th>Fail</th>
                     <th>Success</th>
                     <th>Crit</th>
-                    <th>No Eff</th>
+                    <th>No Dmg</th>
                     <th>Minor</th>
                     <th>Down</th>
                     <th>Kill</th>
@@ -50,7 +92,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Short range</td>
+                    <td>Short Range</td>
                     <td id="short-atk-fail"></td>
                     <td id="short-atk-success"></td>
                     <td id="short-atk-critical"></td>
@@ -58,10 +100,9 @@
                     <td id="short-injury-minor-hit"></td>
                     <td id="short-injury-down"></td>
                     <td id="short-injury-kill"></td>
-                    <td id="short-hit-kill"></td>
                 </tr>
                 <tr>
-                    <td>Long range</td>
+                    <td>Long Range</td>
                     <td id="long-atk-fail"></td>
                     <td id="long-atk-success"></td>
                     <td id="long-atk-critical"></td>
@@ -69,13 +110,45 @@
                     <td id="long-injury-minor-hit"></td>
                     <td id="long-injury-down"></td>
                     <td id="long-injury-kill"></td>
-                    <td id="long-hit-kill"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>1 Atk Hit Kill</th>
+                    <th>2 Atk Hit Kill</th>
+                    <th>3 Atk Hit Kill</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Short Range</td>
+                    <td id="short-1atk-hit-kill"></td>
+                    <td id="short-2atk-hit-kill"></td>
+                    <td id="short-3atk-hit-kill"></td>
+                </tr>
+                <tr>
+                    <td>Long Range</td>
+                    <td id="long-1atk-hit-kill"></td>
+                    <td id="long-2atk-hit-kill"></td>
+                    <td id="long-3atk-hit-kill"></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <script src="./lib/probability-calculator.js"></script>
+    <div class="overlay" id="overlay">
+        <div class="modal">
+            <div class="spinner"></div>
+            <p>Carregando...</p>
+        </div>
+    </div>
+
+    <script src="lib/base-rolls.js"></script>
+    <script src="lib/probability-calculator.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
